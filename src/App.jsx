@@ -1,18 +1,27 @@
 // src/App.jsx
-import React from 'react';
 import './App.css';
-import NavBar from './components/Nav-Bar';
-import Footer from './components/Footer';
-import Products from './components/products'; // Importar el componente de productos
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MainLayout from './layouts/MainLayout';
+import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import useAuth from './hooks/useAuth';
+import { MotionDiv } from './components/content/MotionDiv';
 
 function App() {
+  const { loading } = useAuth();
+
   return (
-    <div>
-      <NavBar />
-      <Products /> {/* Aquí se renderiza el componente de productos */}
-      <Footer />
-    </div>
+    <>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+      {!loading && (
+        <MotionDiv>
+          <MainLayout>
+            <Outlet />
+          </MainLayout>
+        </MotionDiv>
+      )}
+    </>
   );
 }
 
